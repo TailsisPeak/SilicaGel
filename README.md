@@ -78,6 +78,4 @@ silica-gel-ide/
 - Light theme + theme picker
 - Settings panel
 
----
 
-© 2026 — MIT licensed.
