@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<SyntaxDefinition name="Gel" extensions=".gel" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+    <!-- VS Code Dark+ inspired palette -->
+    <Color name="Comment"      foreground="#6A9955" fontStyle="italic" />
+    <Color name="String"       foreground="#CE9178" />
+    <Color name="StringEscape" foreground="#D7BA7D" />
+    <Color name="Number"       foreground="#B5CEA8" />
+    <Color name="Keyword"      foreground="#569CD6" fontWeight="bold" />
+    <Color name="ControlFlow"  foreground="#C586C0" fontWeight="bold" />
+    <Color name="Type"         foreground="#4EC9B0" />
+    <Color name="Builtin"      foreground="#DCDCAA" />
+    <Color name="Constant"     foreground="#569CD6" fontStyle="italic" />
+    <Color name="FunctionDef"  foreground="#DCDCAA" fontWeight="bold" />
+    <Color name="FunctionCall" foreground="#DCDCAA" />
+    <Color name="Member"       foreground="#9CDCFE" />
+    <Color name="Punctuation"  foreground="#D4D4D4" />
+    <Color name="Operator"     foreground="#D4D4D4" />
+
+    <RuleSet ignoreCase="false">
+        <!-- Comments -->
+        <Span color="Comment" begin="\#" />
+        <Span color="Comment" begin="//" />
+        <Span color="Comment" multiline="true" begin="/\*" end="\*/" />
+
+        <!-- Strings -->
+        <Span color="String" multiline="false">
+            <Begin>"</Begin><End>"</End>
+            <RuleSet>
+                <Span begin="\\" end="." color="StringEscape" />
+            </RuleSet>
+        </Span>
+        <Span color="String" multiline="false">
+            <Begin>'</Begin><End>'</End>
+            <RuleSet>
+                <Span begin="\\" end="." color="StringEscape" />
+            </RuleSet>
+        </Span>
+
+        <!-- Function definition: identifier right after `func`/`function` -->
+        <Rule color="FunctionDef">(?&lt;=\b(func|function)\s+)[A-Za-z_]\w*</Rule>
+
+        <!-- Function call: identifier directly followed by `(` -->
+        <Rule color="FunctionCall">\b[A-Za-z_]\w*(?=\s*\()</Rule>
+
+        <!-- Member access: .member -->
+        <Rule color="Member">(?&lt;=\.)\s*[A-Za-z_]\w*</Rule>
+
+        <!-- Control-flow keywords (purple, like VS Code) -->
+        <Keywords color="ControlFlow">
+            <Word>if</Word><Word>elif</Word><Word>else</Word>
+            <Word>while</Word><Word>for</Word><Word>each</Word><Word>in</Word><Word>do</Word>
+            <Word>return</Word><Word>rtn</Word><Word>end</Word>
+            <Word>break</Word><Word>continue</Word><Word>crash</Word>
+        </Keywords>
+
+        <!-- Other keywords -->
+        <Keywords color="Keyword">
+            <Word>func</Word><Word>function</Word>
+            <Word>import</Word><Word>include</Word><Word>var</Word>
+            <Word>is</Word><Word>not</Word><Word>or</Word><Word>and</Word>
+        </Keywords>
+
+        <!-- Constants -->
+        <Keywords color="Constant">
+            <Word>true</Word><Word>false</Word><Word>null</Word>
+        </Keywords>
+
+        <!-- Types -->
+        <Keywords color="Type">
+            <Word>int</Word><Word>float</Word><Word>double</Word><Word>str</Word><Word>txt</Word>
+            <Word>bool</Word><Word>boolean</Word><Word>dec</Word><Word>exact</Word><Word>ext</Word>
+        </Keywords>
+
+        <!-- Built-ins / engine API -->
+        <Keywords color="Builtin">
+            <Word>print</Word><Word>rem</Word><Word>percent</Word>
+            <Word>Vec</Word><Word>Mathf</Word><Word>Time</Word><Word>Input</Word><Word>Log</Word>
+            <Word>Transform</Word><Word>GameObject</Word><Word>Scene</Word>
+        </Keywords>
+
+        <!-- Numbers (after function-call rule so 1.0 isn't grabbed by it) -->
+        <Rule color="Number">\b0[xX][0-9a-fA-F]+\b</Rule>
+        <Rule color="Number">\b\d+(\.\d+)?([eE][+-]?\d+)?\b</Rule>
+
+        <!-- Punctuation / Operators -->
+        <Rule color="Operator">[+\-*/%=&lt;&gt;!^&amp;|]+</Rule>
+        <Rule color="Punctuation">[\(\)\[\]\{\},;\.]</Rule>
+    </RuleSet>
+</SyntaxDefinition>

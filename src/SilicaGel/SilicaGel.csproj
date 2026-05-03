@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <RootNamespace>SilicaGel</RootNamespace>
+    <AssemblyName>SilicaGel</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+    <AvaloniaResource Include="Languages\*.xshd" />
+    <EmbeddedResource Include="Languages\*.xshd" />
+  </ItemGroup>
+  <!-- The Gel/Silica/Blocks parsers + cross-language converter live in the AxionEngine
+       repo (src/Axion.Scripting).  We vendor a copy under Languages/Engine/ so the IDE
+       builds standalone — no sibling checkout required.  Run `scripts/sync-engine-sources.sh`
+       (or .ps1) when you want to pull the latest from a sibling AxionEngine clone. -->
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.10" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.0.10" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.0.6" />
+  </ItemGroup>
+</Project>
