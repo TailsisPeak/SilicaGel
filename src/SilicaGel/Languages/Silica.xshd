@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<SyntaxDefinition name="Silica" extensions=".sil" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+    <Color name="Comment"      foreground="#6A9955" fontStyle="italic" />
+    <Color name="String"       foreground="#CE9178" />
+    <Color name="StringEscape" foreground="#D7BA7D" />
+    <Color name="Number"       foreground="#B5CEA8" />
+    <Color name="Keyword"      foreground="#569CD6" fontWeight="bold" />
+    <Color name="ControlFlow"  foreground="#C586C0" fontWeight="bold" />
+    <Color name="Type"         foreground="#4EC9B0" />
+    <Color name="Builtin"      foreground="#DCDCAA" />
+    <Color name="Constant"     foreground="#569CD6" fontStyle="italic" />
+    <Color name="FunctionDef"  foreground="#DCDCAA" fontWeight="bold" />
+    <Color name="FunctionCall" foreground="#DCDCAA" />
+    <Color name="Member"       foreground="#9CDCFE" />
+    <Color name="Punctuation"  foreground="#D4D4D4" />
+    <Color name="Operator"     foreground="#D4D4D4" />
+
+    <RuleSet ignoreCase="false">
+        <Span color="Comment" begin="\#" />
+
+        <Span color="String" multiline="false">
+            <Begin>"</Begin><End>"</End>
+            <RuleSet><Span begin="\\" end="." color="StringEscape" /></RuleSet>
+        </Span>
+
+        <Rule color="FunctionDef">(?&lt;=\bfunc\s+)[A-Za-z_]\w*</Rule>
+        <Rule color="FunctionDef">(?&lt;=\bgroup\s+)[A-Za-z_]\w*</Rule>
+        <Rule color="FunctionCall">\b[A-Za-z_]\w*(?=\s*\()</Rule>
+        <Rule color="Member">(?&lt;=\.)\s*[A-Za-z_]\w*</Rule>
+
+        <Keywords color="ControlFlow">
+            <Word>if</Word><Word>else</Word><Word>match</Word>
+            <Word>while</Word><Word>for</Word><Word>loop</Word><Word>in</Word><Word>do</Word>
+            <Word>break</Word><Word>continue</Word><Word>return</Word><Word>quit</Word>
+            <Word>await</Word>
+        </Keywords>
+
+        <Keywords color="Keyword">
+            <Word>func</Word><Word>group</Word><Word>import</Word><Word>global</Word>
+            <Word>is</Word><Word>not</Word><Word>or</Word><Word>and</Word>
+            <Word>xor</Word><Word>nand</Word><Word>nor</Word><Word>xnor</Word>
+            <Word>convert</Word><Word>range</Word><Word>typeof</Word>
+            <Word>async</Word><Word>thread</Word><Word>alloc</Word><Word>free</Word>
+        </Keywords>
+
+        <Keywords color="Constant">
+            <Word>true</Word><Word>false</Word><Word>none</Word>
+        </Keywords>
+
+        <!-- All Silica spec types -->
+        <Keywords color="Type">
+            <Word>int</Word><Word>int8</Word><Word>int16</Word><Word>int32</Word>
+            <Word>decimal</Word><Word>decimal32</Word><Word>decimal128</Word><Word>exact</Word>
+            <Word>bool</Word><Word>txt</Word><Word>bit</Word><Word>byte</Word>
+            <Word>vector2</Word><Word>vector3</Word><Word>vector4</Word>
+            <Word>matrix2</Word><Word>matrix3</Word><Word>matrix4</Word>
+            <Word>memory</Word>
+        </Keywords>
+
+        <!-- Built-in / stdlib functions and modules -->
+        <Keywords color="Builtin">
+            <Word>print</Word><Word>read</Word><Word>rem</Word><Word>percent</Word>
+            <Word>sqrt</Word><Word>abs</Word><Word>floor</Word><Word>ceil</Word><Word>round</Word>
+            <Word>clamp</Word><Word>sin</Word><Word>cos</Word><Word>tan</Word>
+            <Word>arcsin</Word><Word>arccos</Word><Word>arctan</Word><Word>arctan2</Word>
+            <Word>log</Word><Word>pow</Word><Word>pi</Word><Word>euler</Word>
+            <Word>identity</Word><Word>transpose</Word><Word>inverse</Word><Word>determinant</Word>
+            <Word>file</Word><Word>dir</Word><Word>env</Word><Word>os</Word><Word>process</Word>
+            <Word>time</Word><Word>vector</Word><Word>array</Word><Word>txt</Word>
+            <Word>errors</Word>
+            <Word>Vec</Word><Word>Mathf</Word><Word>Time</Word><Word>Input</Word><Word>Log</Word>
+            <Word>Transform</Word><Word>GameObject</Word><Word>Scene</Word>
+        </Keywords>
+
+        <Rule color="Number">\b0[xX][0-9a-fA-F]+\b</Rule>
+        <Rule color="Number">\b\d+(\.\d+)?([eE][+-]?\d+)?\b</Rule>
+
+        <Rule color="Operator">[+\-*/%=&lt;&gt;!^&amp;|]+</Rule>
+        <Rule color="Punctuation">[\(\)\[\]\{\},;\.]</Rule>
+    </RuleSet>
+</SyntaxDefinition>

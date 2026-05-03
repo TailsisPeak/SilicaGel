@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <RootNamespace>SilicaGel</RootNamespace>
+    <AssemblyName>SilicaGel</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+    <AvaloniaResource Include="Languages\*.xshd" />
+    <EmbeddedResource Include="Languages\*.xshd" />
+  </ItemGroup>
+  <!-- Pull in the engine's parsers / cross-language converter as source so the IDE stays
+       buildable even when the engine isn't checked out alongside it. -->
+  <ItemGroup>
+    <Compile Include="..\..\..\axion-engine\src\Axion.Scripting\Ast.cs"               Link="Languages\Engine\Ast.cs"               Condition="Exists('..\..\..\axion-engine\src\Axion.Scripting\Ast.cs')" />
+    <Compile Include="..\..\..\axion-engine\src\Axion.Scripting\Gel.cs"               Link="Languages\Engine\Gel.cs"               Condition="Exists('..\..\..\axion-engine\src\Axion.Scripting\Gel.cs')" />
+    <Compile Include="..\..\..\axion-engine\src\Axion.Scripting\Silica.cs"            Link="Languages\Engine\Silica.cs"            Condition="Exists('..\..\..\axion-engine\src\Axion.Scripting\Silica.cs')" />
+    <Compile Include="..\..\..\axion-engine\src\Axion.Scripting\Blocks.cs"            Link="Languages\Engine\Blocks.cs"            Condition="Exists('..\..\..\axion-engine\src\Axion.Scripting\Blocks.cs')" />
+    <Compile Include="..\..\..\axion-engine\src\Axion.Scripting\CSharpEmitter.cs"     Link="Languages\Engine\CSharpEmitter.cs"     Condition="Exists('..\..\..\axion-engine\src\Axion.Scripting\CSharpEmitter.cs')" />
+    <Compile Include="..\..\..\axion-engine\src\Axion.Scripting\LanguageConverter.cs" Link="Languages\Engine\LanguageConverter.cs" Condition="Exists('..\..\..\axion-engine\src\Axion.Scripting\LanguageConverter.cs')" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.10" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.0.10" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.0.6" />
+  </ItemGroup>
+</Project>

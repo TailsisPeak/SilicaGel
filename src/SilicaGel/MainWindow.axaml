@@ -1,0 +1,316 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SilicaGel"
+        xmlns:local="clr-namespace:SilicaGel"
+        mc:Ignorable="d"
+        x:Class="SilicaGel.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Silica Gel — Visual Studio Code-style IDE"
+        Width="1480" Height="940"
+        MinWidth="900" MinHeight="600"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.KeyBindings>
+        <KeyBinding Gesture="F5"            Command="{Binding RunCommand}" />
+        <KeyBinding Gesture="Ctrl+S"        Command="{Binding SaveCommand}" />
+        <KeyBinding Gesture="Ctrl+Shift+S"  Command="{Binding SaveAsCommand}" />
+        <KeyBinding Gesture="Ctrl+N"        Command="{Binding NewFileCommand}" />
+        <KeyBinding Gesture="Ctrl+O"        Command="{Binding OpenFileCommand}" />
+        <KeyBinding Gesture="Ctrl+W"            Command="{Binding CloseTabCommand}" />
+        <KeyBinding Gesture="Ctrl+OemComma"     Command="{Binding ToggleSettingsCommand}" />
+        <KeyBinding Gesture="Ctrl+Shift+X"      Command="{Binding ShowExtensionsCommand}" />
+        <KeyBinding Gesture="Ctrl+Shift+E"      Command="{Binding ShowExplorerCommand}" />
+        <KeyBinding Gesture="Ctrl+Shift+F"      Command="{Binding ShowSearchCommand}" />
+        <KeyBinding Gesture="Ctrl+Shift+M"      Command="{Binding ToggleProblemsCommand}" />
+        <KeyBinding Gesture="Ctrl+F"            Command="{Binding FindCommand}" />
+        <KeyBinding Gesture="Ctrl+OemPlus"      Command="{Binding ZoomInCommand}" />
+        <KeyBinding Gesture="Ctrl+OemMinus"     Command="{Binding ZoomOutCommand}" />
+        <KeyBinding Gesture="Ctrl+D0"           Command="{Binding ResetZoomCommand}" />
+        <KeyBinding Gesture="Alt+Z"             Command="{Binding ToggleWordWrapCommand}" />
+    </Window.KeyBindings>
+
+    <Grid RowDefinitions="36,*,22">
+        <!-- ─── Title bar with REAL menus ──────────────────────────────────── -->
+        <Border Grid.Row="0" Background="{DynamicResource BgTitle}">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="12,0" VerticalAlignment="Center" Spacing="0">
+                    <TextBlock Text="Silica Gel" FontWeight="SemiBold" FontSize="12" VerticalAlignment="Center" Margin="0,0,12,0" />
+                    <Menu Background="Transparent" Padding="0">
+                        <MenuItem Header="_File">
+                            <MenuItem Header="New File"          Command="{Binding NewFileCommand}"      InputGesture="Ctrl+N" />
+                            <MenuItem Header="Open File…"        Command="{Binding OpenFileCommand}"     InputGesture="Ctrl+O" />
+                            <MenuItem Header="Open Folder…"      Command="{Binding OpenFolderCommand}" />
+                            <Separator />
+                            <MenuItem Header="Save"              Command="{Binding SaveCommand}"         InputGesture="Ctrl+S" />
+                            <MenuItem Header="Save As…"          Command="{Binding SaveAsCommand}"       InputGesture="Ctrl+Shift+S" />
+                            <MenuItem Header="Save All"          Command="{Binding SaveAllCommand}" />
+                            <Separator />
+                            <MenuItem Header="Close Tab"         Command="{Binding CloseTabCommand}"     InputGesture="Ctrl+W" />
+                            <MenuItem Header="Close All Tabs"    Command="{Binding CloseAllTabsCommand}" />
+                            <Separator />
+                            <MenuItem Header="Preferences: Settings" Command="{Binding ToggleSettingsCommand}" />
+                            <Separator />
+                            <MenuItem Header="Exit"              Command="{Binding ExitCommand}" />
+                        </MenuItem>
+                        <MenuItem Header="_Edit">
+                            <MenuItem Header="Undo"        Command="{Binding UndoCommand}"      InputGesture="Ctrl+Z" />
+                            <MenuItem Header="Redo"        Command="{Binding RedoCommand}"      InputGesture="Ctrl+Y" />
+                            <Separator />
+                            <MenuItem Header="Cut"         Command="{Binding CutCommand}"       InputGesture="Ctrl+X" />
+                            <MenuItem Header="Copy"        Command="{Binding CopyCommand}"      InputGesture="Ctrl+C" />
+                            <MenuItem Header="Paste"       Command="{Binding PasteCommand}"     InputGesture="Ctrl+V" />
+                            <Separator />
+                            <MenuItem Header="Select All"  Command="{Binding SelectAllCommand}" InputGesture="Ctrl+A" />
+                            <MenuItem Header="Find"        Command="{Binding FindCommand}"      InputGesture="Ctrl+F" />
+                        </MenuItem>
+                        <MenuItem Header="_View">
+                            <MenuItem Header="Explorer"        Command="{Binding ShowExplorerCommand}"      InputGesture="Ctrl+Shift+E" />
+                            <MenuItem Header="Search"          Command="{Binding ShowSearchCommand}"        InputGesture="Ctrl+Shift+F" />
+                            <MenuItem Header="Source Control"  Command="{Binding ShowSourceControlCommand}" />
+                            <MenuItem Header="Run and Debug"   Command="{Binding ShowRunCommand}" />
+                            <MenuItem Header="Extensions"      Command="{Binding ShowExtensionsCommand}"    InputGesture="Ctrl+Shift+X" />
+                            <Separator />
+                            <MenuItem Header="Toggle Problems Panel" Command="{Binding ToggleProblemsCommand}" InputGesture="Ctrl+Shift+M" />
+                            <MenuItem Header="Toggle Word Wrap"      Command="{Binding ToggleWordWrapCommand}" InputGesture="Alt+Z" />
+                            <Separator />
+                            <MenuItem Header="Zoom In"         Command="{Binding ZoomInCommand}" />
+                            <MenuItem Header="Zoom Out"        Command="{Binding ZoomOutCommand}" />
+                            <MenuItem Header="Reset Zoom"      Command="{Binding ResetZoomCommand}" />
+                        </MenuItem>
+                        <MenuItem Header="_Run">
+                            <MenuItem Header="Run Script"      Command="{Binding RunCommand}"          InputGesture="F5" />
+                            <MenuItem Header="Clear Output"    Command="{Binding ClearConsoleCommand}" />
+                            <Separator />
+                            <MenuItem Header="Convert → Gel"    Command="{Binding ConvertToGelCommand}" />
+                            <MenuItem Header="Convert → Silica" Command="{Binding ConvertToSilicaCommand}" />
+                            <MenuItem Header="Convert → C#"     Command="{Binding ConvertToCSharpCommand}" />
+                        </MenuItem>
+                        <MenuItem Header="_Window">
+                            <MenuItem Header="Zoom In"         Command="{Binding ZoomInCommand}" />
+                            <MenuItem Header="Zoom Out"        Command="{Binding ZoomOutCommand}" />
+                            <MenuItem Header="Reset Zoom"      Command="{Binding ResetZoomCommand}" />
+                            <Separator />
+                            <MenuItem Header="Close Tab"       Command="{Binding CloseTabCommand}" />
+                            <MenuItem Header="Close All Tabs"  Command="{Binding CloseAllTabsCommand}" />
+                        </MenuItem>
+                        <MenuItem Header="_Help">
+                            <MenuItem Header="About Silica Gel" Command="{Binding AboutCommand}" />
+                            <MenuItem Header="Reload Extensions" Command="{Binding ReloadExtensionsCommand}" />
+                        </MenuItem>
+                    </Menu>
+                </StackPanel>
+                <TextBlock Grid.Column="1" Text="{Binding RootFolderDisplay}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Foreground="{DynamicResource FgMuted}" />
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="8,0" Spacing="4" VerticalAlignment="Center">
+                    <Button Content="▶ Run"        Classes="accent" Command="{Binding RunCommand}" ToolTip.Tip="Run the active script (F5)" />
+                    <Border Width="1" Background="{DynamicResource StrokeSoft}" Margin="6,6" />
+                    <Button Content="→ Gel"     Classes="flat"   Command="{Binding ConvertToGelCommand}" />
+                    <Button Content="→ Silica"  Classes="flat"   Command="{Binding ConvertToSilicaCommand}" />
+                    <Button Content="→ C#"      Classes="accent" Command="{Binding ConvertToCSharpCommand}" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ─── Activity bar | sidebar | editor+problems | output ─────────── -->
+        <Grid Grid.Row="1" ColumnDefinitions="48,260,*,300">
+
+            <!-- Activity bar -->
+            <Border Grid.Column="0" Background="{DynamicResource BgActivity}">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top">
+                        <Button Classes="activity" Content="📁" ToolTip.Tip="Explorer (Ctrl+Shift+E)"     Command="{Binding ShowExplorerCommand}" />
+                        <Button Classes="activity" Content="🔍" ToolTip.Tip="Search (Ctrl+Shift+F)"       Command="{Binding ShowSearchCommand}" />
+                        <Button Classes="activity" Content="⎇"  ToolTip.Tip="Source Control"              Command="{Binding ShowSourceControlCommand}" />
+                        <Button Classes="activity" Content="▷"  ToolTip.Tip="Run and Debug"               Command="{Binding ShowRunCommand}" />
+                        <Button Classes="activity" Content="⊞"  ToolTip.Tip="Extensions (Ctrl+Shift+X)"   Command="{Binding ShowExtensionsCommand}" />
+                    </StackPanel>
+                    <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+                        <Button Classes="activity" Content="@" ToolTip.Tip="Account" />
+                        <Button Classes="activity" Content="⚙" ToolTip.Tip="Settings (Ctrl+,)" Command="{Binding ToggleSettingsCommand}" />
+                    </StackPanel>
+                    <Border /> <!-- spacer -->
+                </DockPanel>
+            </Border>
+
+            <!-- Sidebar (mode-switched) -->
+            <Border Grid.Column="1" Background="{DynamicResource BgSidebar}">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="{Binding SidebarTitle}" Classes="title" />
+
+                    <!-- Explorer -->
+                    <DockPanel IsVisible="{Binding SidebarIsExplorer}">
+                        <Border DockPanel.Dock="Top" Background="Transparent" Margin="14,0,10,4" Padding="0,2">
+                            <TextBlock Text="OPEN EDITORS" FontSize="10" FontWeight="SemiBold" Foreground="{DynamicResource FgMuted}" />
+                        </Border>
+                        <ListBox DockPanel.Dock="Top" MaxHeight="120"
+                                 ItemsSource="{Binding Tabs}"
+                                 SelectedItem="{Binding ActiveTab, Mode=TwoWay}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="vm:EditorTabViewModel">
+                                    <TextBlock Text="{Binding Header}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Border DockPanel.Dock="Top" Background="Transparent" Margin="14,8,10,4" Padding="0,2">
+                            <TextBlock Text="WORKSPACE" FontSize="10" FontWeight="SemiBold" Foreground="{DynamicResource FgMuted}" />
+                        </Border>
+                        <ListBox Classes="tree"
+                                 ItemsSource="{Binding Files}"
+                                 SelectedItem="{Binding SelectedFile, Mode=TwoWay}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="vm:FileEntry">
+                                    <Grid ColumnDefinitions="20,*,Auto" Margin="2,0">
+                                        <TextBlock Grid.Column="0" Text="{Binding Icon}" />
+                                        <TextBlock Grid.Column="1" Text="{Binding DisplayName}" />
+                                        <TextBlock Grid.Column="2" Text="{Binding LangBadge}" Classes="muted" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DockPanel>
+
+                    <!-- Search -->
+                    <StackPanel IsVisible="{Binding SidebarIsSearch}" Margin="14,8" Spacing="6">
+                        <TextBox Watermark="Search across files (preview)" />
+                        <TextBlock Text="Search across the workspace will be available in a future build." Foreground="{DynamicResource FgMuted}" FontSize="11" TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <!-- Source Control -->
+                    <StackPanel IsVisible="{Binding SidebarIsSourceControl}" Margin="14,8" Spacing="6">
+                        <TextBlock Text="Source control integration is planned." Foreground="{DynamicResource FgMuted}" FontSize="11" TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <!-- Run -->
+                    <StackPanel IsVisible="{Binding SidebarIsRun}" Margin="14,8" Spacing="8">
+                        <Button Content="▶  Run Active Script (F5)" Classes="accent" Command="{Binding RunCommand}" HorizontalAlignment="Stretch" />
+                        <Button Content="Clear Output" Classes="flat"   Command="{Binding ClearConsoleCommand}" HorizontalAlignment="Stretch" />
+                        <TextBlock Text="The interpreter executes Gel and Silica directly — no compile step required." Foreground="{DynamicResource FgMuted}" FontSize="11" TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <!-- Extensions -->
+                    <ContentControl IsVisible="{Binding SidebarIsExtensions}" Content="{Binding ExtensionsVm}">
+                        <ContentControl.ContentTemplate>
+                            <DataTemplate DataType="vm:ExtensionsViewModel">
+                                <local:ExtensionsView />
+                            </DataTemplate>
+                        </ContentControl.ContentTemplate>
+                    </ContentControl>
+                </DockPanel>
+            </Border>
+
+            <!-- Editor area: TabControl OR Settings overlay, + collapsible Problems panel -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="{Binding ProblemsPanelOpen, Converter={x:Static local:BoolToHeightConverter.Instance}}" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <TabControl Margin="0"
+                                Background="{DynamicResource BgEditor}"
+                                IsVisible="{Binding EditorVisible}"
+                                ItemsSource="{Binding Tabs}"
+                                SelectedItem="{Binding ActiveTab, Mode=TwoWay}">
+                        <TabControl.ItemTemplate>
+                            <DataTemplate DataType="vm:EditorTabViewModel">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <TextBlock Text="{Binding Header}" />
+                                    <Button Content="×" Width="16" Height="16" Padding="0"
+                                            Background="Transparent" BorderThickness="0"
+                                            Command="{Binding CloseCommand}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </TabControl.ItemTemplate>
+                        <TabControl.ContentTemplate>
+                            <DataTemplate DataType="vm:EditorTabViewModel">
+                                <local:CodeEditorView />
+                            </DataTemplate>
+                        </TabControl.ContentTemplate>
+                    </TabControl>
+
+                    <ContentControl IsVisible="{Binding SettingsOpen}" Content="{Binding SettingsVm}">
+                        <ContentControl.ContentTemplate>
+                            <DataTemplate DataType="vm:SettingsViewModel">
+                                <local:SettingsView />
+                            </DataTemplate>
+                        </ContentControl.ContentTemplate>
+                    </ContentControl>
+                </Grid>
+
+                <!-- Problems panel -->
+                <Border Grid.Row="1" Background="{DynamicResource BgPanel}"
+                        BorderBrush="{DynamicResource StrokeSoft}" BorderThickness="0,1,0,0"
+                        IsVisible="{Binding ProblemsPanelOpen}">
+                    <DockPanel>
+                        <Border DockPanel.Dock="Top" Background="{DynamicResource BgTitle}">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="14,4">
+                                    <TextBlock Text="PROBLEMS" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource FgPrimary}" VerticalAlignment="Center" />
+                                    <Border Background="{DynamicResource Accent}" CornerRadius="8" Padding="6,1" Margin="8,0,0,0" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Problems.Count}" Foreground="White" FontSize="10" />
+                                    </Border>
+                                </StackPanel>
+                                <Button Grid.Column="1" Content="✕" Classes="flat" Command="{Binding ToggleProblemsCommand}" />
+                            </Grid>
+                        </Border>
+                        <ListBox Background="Transparent" BorderThickness="0"
+                                 ItemsSource="{Binding Problems}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="vm:Diagnostic">
+                                    <Grid ColumnDefinitions="22,Auto,*,Auto" Margin="6,2">
+                                        <TextBlock Grid.Column="0" Text="⊘" Foreground="{DynamicResource ErrorBrush}" FontWeight="Bold" />
+                                        <TextBlock Grid.Column="1" Text="{Binding SeverityText}" Foreground="{DynamicResource FgMuted}" Margin="0,0,10,0" FontSize="11" />
+                                        <TextBlock Grid.Column="2" Text="{Binding Message}" Foreground="{DynamicResource FgPrimary}" FontSize="12" />
+                                        <TextBlock Grid.Column="3" Text="{Binding Line, StringFormat=Ln {0}}" Foreground="{DynamicResource FgMuted}" FontSize="11" Margin="10,0,0,0" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DockPanel>
+                </Border>
+            </Grid>
+
+            <!-- Output / console -->
+            <Border Grid.Column="3" Background="{DynamicResource BgPanel}" BorderBrush="{DynamicResource StrokeSoft}" BorderThickness="1,0,0,0">
+                <DockPanel>
+                    <Border DockPanel.Dock="Top" Background="{DynamicResource BgTitle}">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Grid.Column="0" Text="OUTPUT" Classes="title" />
+                            <Button   Grid.Column="1" Content="Clear" Classes="flat" Margin="0,4,8,0" Command="{Binding ClearConsoleCommand}" />
+                        </Grid>
+                    </Border>
+                    <ScrollViewer>
+                        <TextBox Text="{Binding ConsoleText}"
+                                 IsReadOnly="True"
+                                 BorderThickness="0"
+                                 Background="Transparent"
+                                 FontFamily="Cascadia Code, Consolas, Menlo, monospace"
+                                 FontSize="12"
+                                 Margin="8,0,8,8"
+                                 TextWrapping="Wrap" />
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+        </Grid>
+
+        <!-- ─── VS Code blue status bar ────────────────────────────────────── -->
+        <Border Grid.Row="2" Classes="statusbar">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14" Margin="10,0">
+                    <Button Classes="flat" Padding="6,0" Background="Transparent" Foreground="White"
+                            Command="{Binding ToggleProblemsCommand}"
+                            Content="{Binding ProblemsBadge}" />
+                    <TextBlock Classes="statusbar" Text="{Binding StatusBarText}" />
+                </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="14" Margin="10,0">
+                    <Button Classes="flat" Padding="6,0" Background="Transparent" Foreground="White"
+                            Command="{Binding ToggleSettingsCommand}" Content="⚙ Settings" />
+                    <TextBlock Classes="statusbar" Text="UTF-8" />
+                    <TextBlock Classes="statusbar" Text="LF" />
+                    <TextBlock Classes="statusbar" Text="Spaces: 4" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

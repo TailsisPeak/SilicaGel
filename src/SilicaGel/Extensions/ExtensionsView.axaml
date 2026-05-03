@@ -1,0 +1,44 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:SilicaGel"
+             x:Class="SilicaGel.ExtensionsView"
+             x:DataType="vm:ExtensionsViewModel">
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Padding="12,8">
+            <StackPanel Spacing="6">
+                <TextBlock Text="EXTENSIONS" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource FgMuted}" />
+                <TextBox Watermark="Search installed extensions"
+                         Text="{Binding Search}"
+                         Background="{DynamicResource BgEditor}"
+                         BorderBrush="{DynamicResource StrokeSoft}"
+                         BorderThickness="1" Padding="6,4" />
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <Button Classes="flat" Command="{Binding ReloadCommand}"     Content="Reload" />
+                    <Button Classes="flat" Command="{Binding OpenFolderCommand}" Content="Open folder" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        <ListBox Background="Transparent" BorderThickness="0"
+                 ItemsSource="{Binding Items}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="vm:LoadedExtension">
+                    <Border Background="{DynamicResource BgPanel}" CornerRadius="3" Padding="10,8" Margin="6,3">
+                        <StackPanel Spacing="3">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBlock Grid.Column="0" Text="{Binding DisplayName}" FontWeight="SemiBold" />
+                                <Border Grid.Column="1" Background="{DynamicResource Accent}" CornerRadius="3" Padding="4,1">
+                                    <TextBlock Text="{Binding Kind}" FontSize="9" Foreground="White" />
+                                </Border>
+                            </Grid>
+                            <TextBlock Text="{Binding Description}" Foreground="{DynamicResource FgMuted}" FontSize="11" TextWrapping="Wrap" />
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBlock Grid.Column="0" Text="{Binding Publisher}" Foreground="{DynamicResource FgMuted}" FontSize="10" />
+                                <TextBlock Grid.Column="1" Text="{Binding Version}"  Foreground="{DynamicResource FgMuted}" FontSize="10" />
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
+</UserControl>
